@@ -1,6 +1,53 @@
-let start = document.getElementById('start');
+let add_pos = document.getElementById('add_pos');
+let del_pos = document.getElementById('del_pos');
 let mai = document.getElementById('main');
+let tab = document.getElementById('tab');
+var poz = 0;
+let pozycja = '';
 
-start.addEventListener("click", function(){
-    mai.innerHTML = ``;
-});
+tab.innerHTML += `<tr>
+<td>${poz+1}</td><td><select id="odz${poz}">
+    <option value="1">Majtki</option>
+    <option value="2">Skarpetki</option>
+    <option value="3">Koszlka</option>
+    <option value="4">Spodnie</option>
+</select></td><td><input type="number" id="ilosc${poz}" value="1" required></td></tr>`;
+
+add_pos.addEventListener("click", event =>{
+    event.preventDefault()
+    if(poz == -1){
+        poz+=1
+    }
+    if(poz == 3){
+        poz+=1
+        tab.innerHTML += `<tr><td style=" color: red;" colspan="3">Chyba wszytkie opcje zostały wykorzystane. Nie sądzisz?</td></tr>`
+    }if(poz > 3){
+
+    }else{
+        poz+=1
+    tab.innerHTML += `<tr>
+    <td>${poz+1}</td><td><select id="odz${poz}">
+        <option value="1">Majtki</option>
+        <option value="2">Skarpetki</option>
+        <option value="3">Koszlka</option>
+        <option value="4">Spodnie</option>
+    </select></td><td><input type="number" id="ilosc${poz}" value="1" required></td></tr>`
+    }
+    console.log(poz);
+})
+
+del_pos.addEventListener("click", event =>{
+    event.preventDefault()
+    if(confirm("Czy na pewno chcesz wyjąć ostatnią pozycję?") == true){
+    if(poz+1 == 1){
+        poz-=1
+    }
+    if(poz+1 == 0){
+        alert(`Została ci tylko jedna pozycja!!!\n(Nie możesz jej usunąć)`)
+    }
+    else{
+        tab.deleteRow(poz+1);
+        poz-=1
+    }
+    console.log(poz);}
+})
