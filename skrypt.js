@@ -1,17 +1,18 @@
 let add_pos = document.getElementById('add_pos');
 let del_pos = document.getElementById('del_pos');
+let go_on = document.getElementById('go_on');
 let mai = document.getElementById('main');
 let tab = document.getElementById('tab');
 var poz = 0;
 let pozycja = '';
 
 tab.innerHTML += `<tr>
-<td>${poz+1}</td><td><select id="odz${poz}">
+<td>${poz+1}</td><td><select class="odz">
     <option value="1">Majtki</option>
     <option value="2">Skarpetki</option>
     <option value="3">Koszlka</option>
     <option value="4">Spodnie</option>
-</select></td><td><input type="number" id="ilosc${poz}" value="1" required></td></tr>`;
+</select></td><td><input type="number" class="ilosc" value="1" max="8" min="0" required></td></tr>`;
 
 add_pos.addEventListener("click", event =>{
     event.preventDefault()
@@ -26,12 +27,12 @@ add_pos.addEventListener("click", event =>{
     }else{
         poz+=1
     tab.innerHTML += `<tr>
-    <td>${poz+1}</td><td><select id="odz${poz}">
+    <td>${poz+1}</td><td><select class="odz">
         <option value="1">Majtki</option>
         <option value="2">Skarpetki</option>
         <option value="3">Koszlka</option>
         <option value="4">Spodnie</option>
-    </select></td><td><input type="number" id="ilosc${poz}" value="1" required></td></tr>`
+    </select></td><td><input type="number" class="ilosc" value="1" max="8" min="0" required></td></tr>`
     }
     console.log(poz);
 })
@@ -50,4 +51,10 @@ del_pos.addEventListener("click", event =>{
         poz-=1
     }
     console.log(poz);}
+})
+
+go_on.addEventListener("click", event=>{
+    event.preventDefault()
+    let ilosc = document.getElementsByClassName(ilość);
+    console.log(ilosc(1))
 })
