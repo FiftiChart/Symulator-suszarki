@@ -55,6 +55,11 @@ del_pos.addEventListener("click", event =>{
 
 go_on.addEventListener("click", event=>{
     event.preventDefault()
-    let ilosc = document.getElementsByClassName(ilość);
-    console.log(ilosc(1))
+    let ilosc = document.getElementsByClassName('ilosc');
+    console.log(ilosc[1].value)
+    let suma = 0
+    for(let i=0; i<ilosc.length; i++){
+        suma+= parseInt(ilosc[i].value)
+    }
+    console.log(suma)
 })
