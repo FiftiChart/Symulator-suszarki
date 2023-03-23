@@ -34,7 +34,6 @@ add_pos.addEventListener("click", event =>{
         <option value="4">Spodnie</option>
     </select></td><td><input type="number" class="ilosc" value="1" max="8" min="0" required></td></tr>`
     }
-    console.log(poz);
 })
 
 del_pos.addEventListener("click", event =>{
@@ -50,16 +49,28 @@ del_pos.addEventListener("click", event =>{
         tab.deleteRow(poz+1);
         poz-=1
     }
-    console.log(poz);}
+    }
 })
 
 go_on.addEventListener("click", event=>{
-    event.preventDefault()
+    event.preventDefault();
     let ilosc = document.getElementsByClassName('ilosc');
-    console.log(ilosc[1].value)
-    let suma = 0
+    let suma = 0;
+    console.log(parseInt(ilosc[1].value));
     for(let i=0; i<ilosc.length; i++){
-        suma+= parseInt(ilosc[i].value)
+        let war = parseInt(ilosc[i].value)
+        if(war<0){
+            alert("Ilość nie może być ujemna!!!")
+            suma = 0
+            break
+        }
+        else{
+            suma+=war;
+        }
     }
-    console.log(suma)
+    if(suma == 0){
+        tab.innerHTML += `<tr><td style=" color: red;" colspan="3">Nie ma sensu uruchamiać suszarkę bez ubrań. Nie sądzisz?</td></tr>`
+        poz+=1
+    }
+    
 })
