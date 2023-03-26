@@ -1,17 +1,17 @@
 let add_pos = document.getElementById('add_pos');
 let del_pos = document.getElementById('del_pos');
 let go_on = document.getElementById('go_on');
-let mai = document.getElementById('main');
+let main = document.getElementById('main');
 let tab = document.getElementById('tab');
 var poz = 0;
 let pozycja = '';
 
 tab.innerHTML += `<tr>
 <td>${poz+1}</td><td><select class="odz">
-    <option value="1">Majtki</option>
-    <option value="2">Skarpetki</option>
-    <option value="3">Koszlka</option>
-    <option value="4">Spodnie</option>
+    <option value="Majtki">Majtki</option>
+    <option value="Skarpetki">Skarpetki</option>
+    <option value="Koszulka">Koszlka</option>
+    <option value="Spodnie">Spodnie</option>
 </select></td><td><input type="number" class="ilosc" value="1" max="8" min="0" required></td></tr>`;
 
 add_pos.addEventListener("click", event =>{
@@ -28,10 +28,10 @@ add_pos.addEventListener("click", event =>{
         poz+=1
     tab.innerHTML += `<tr>
     <td>${poz+1}</td><td><select class="odz">
-        <option value="1">Majtki</option>
-        <option value="2">Skarpetki</option>
-        <option value="3">Koszlka</option>
-        <option value="4">Spodnie</option>
+        <option value="Majtki">Majtki</option>
+        <option value="Skarpetki">Skarpetki</option>
+        <option value="Koszulka">Koszlka</option>
+        <option value="Spodnie">Spodnie</option>
     </select></td><td><input type="number" class="ilosc" value="1" max="8" min="0" required></td></tr>`
     }
 })
@@ -52,11 +52,44 @@ del_pos.addEventListener("click", event =>{
     }
 })
 
+function otwarcie(){
+    let otworzSuszarke = document.getElementById("otworzSuszarke")
+    otworzSuszarke.addEventListener("click", event =>{
+        event.preventDefault();
+        main.innerHTML = "Dziekuje i pozdrawiam";
+
+    })
+}
+function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+    const Interval = setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent ="Czas prania: "+ minutes + ":" + seconds;
+
+        if (--timer < 0) {
+            display.innerHTML = "";
+            main.innerHTML += `Suszenie skonczone<br/>
+            <button id="otworzSuszarke">Otworz suszarke</button>
+            `
+            clearInterval(Interval);
+            otwarcie();
+            
+        }
+    }, 1000);
+}
+
 go_on.addEventListener("click", event=>{
     event.preventDefault();
-    let ilosc = document.getElementsByClassName('ilosc');
     let suma = 0;
-    console.log(parseInt(ilosc[1].value));
+    let cloth = document.getElementsByClassName('odz')
+    let ilosc = document.getElementsByClassName('ilosc')
+    let out_tab2 = ''
+    console.log(parseInt(ilosc[0].value));
     for(let i=0; i<ilosc.length; i++){
         let war = parseInt(ilosc[i].value)
         if(war<0){
@@ -68,9 +101,79 @@ go_on.addEventListener("click", event=>{
             suma+=war;
         }
     }
+    console.log(suma)
     if(suma == 0){
         tab.innerHTML += `<tr><td style=" color: red;" colspan="3">Nie ma sensu uruchamiać suszarkę bez ubrań. Nie sądzisz?</td></tr>`
         poz+=1
+    }
+    else if(suma > 24){
+        tab.innerHTML += `<tr><td style=" color: red;" colspan="3">ZA DUŻO UBRAŃ!!!</td></tr>`
+        poz+=1
+    }
+    else if(suma < 0){
+
+    }
+    else{
+        out_tab2 += `
+        <table id="tab2">
+            <tr>
+                <th>
+                    Poz.
+                </th>
+                <th>
+                    Odzierz
+                </th>
+                <th>
+                    Ilość
+                </th>
+            </tr>
+        `
+        for (let i=0; i<cloth.length; i++){
+            console.log(cloth[i])
+            out_tab2 += `<tr>
+            <td>${i+1}</td><td>${cloth[i].value}</td><td>${ilosc[i].value}</td></tr>`
+        }
+        out_tab2 += `</table>`
+        main.innerHTML = out_tab2
+
+        main.innerHTML += `
+        <button id="turbo">Turbo</button>
+        <button id="medium">Medium</button>
+        <button id="low">Low</button>
+        `
+        let buttonTurbo = document.getElementById('turbo');
+        let buttonMedium = document.getElementById('medium');
+        let buttonLow = document.getElementById('low');
+        let timeElement = document.getElementById("time");
+        buttonTurbo.addEventListener("click", event =>{
+            event.preventDefault();
+            buttonTurbo.parentNode.removeChild(buttonTurbo);    
+            buttonMedium.parentNode.removeChild(buttonMedium);   
+            buttonLow.parentNode.removeChild(buttonLow);   
+            startTimer(0.1*60, timeElement)
+        })
+        buttonMedium.addEventListener("click", event =>{
+            event.preventDefault();
+            buttonTurbo.parentNode.removeChild(buttonTurbo);    
+            buttonMedium.parentNode.removeChild(buttonMedium);   
+            buttonLow.parentNode.removeChild(buttonLow);   
+            startTimer(10*60, timeElement)
+
+        })
+        buttonLow.addEventListener("click", event =>{
+            event.preventDefault();
+            buttonTurbo.parentNode.removeChild(buttonTurbo);    
+            buttonMedium.parentNode.removeChild(buttonMedium);   
+            buttonLow.parentNode.removeChild(buttonLow);   
+            startTimer(15*60, timeElement)
+
+        })
+
+        // chooseProgram();
+        // // Button
+        //
+
+
     }
     
 })
