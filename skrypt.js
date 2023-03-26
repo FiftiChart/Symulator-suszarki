@@ -169,10 +169,6 @@ go_on.addEventListener("click", event=>{
 
         })
 
-        // chooseProgram();
-        // // Button
-        //
-
 
     }
     
