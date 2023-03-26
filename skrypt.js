@@ -69,11 +69,11 @@ function startTimer(duration, display) {
         minutes = minutes < 10 ? "0" + minutes : minutes;
         seconds = seconds < 10 ? "0" + seconds : seconds;
 
-        display.textContent ="Czas prania: "+ minutes + ":" + seconds;
+        display.textContent ="Czas suszenia: "+ minutes + ":" + seconds;
 
         if (--timer < 0) {
             display.innerHTML = "";
-            main.innerHTML += `Suszenie skonczone<br/>
+            main.innerHTML += `Suszenie Skończone<br/>
             <button id="otworzSuszarke">Otworz suszarke</button>
             `
             clearInterval(Interval);
@@ -139,7 +139,7 @@ go_on.addEventListener("click", event=>{
         main.innerHTML += `
         <button id="turbo">Turbo</button>
         <button id="medium">Medium</button>
-        <button id="low">Low</button>
+        <button id="low">Slow</button>
         `
         let buttonTurbo = document.getElementById('turbo');
         let buttonMedium = document.getElementById('medium');
@@ -150,7 +150,7 @@ go_on.addEventListener("click", event=>{
             buttonTurbo.parentNode.removeChild(buttonTurbo);    
             buttonMedium.parentNode.removeChild(buttonMedium);   
             buttonLow.parentNode.removeChild(buttonLow);   
-            startTimer(0.1*60, timeElement)
+            startTimer(0.01*60, timeElement)
         })
         buttonMedium.addEventListener("click", event =>{
             event.preventDefault();
